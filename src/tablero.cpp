@@ -1,26 +1,47 @@
 #include <iostream>
-#include <string>
 #include "tablero.h"
+#include <stdlib.h>
 
 using namespace tic_tac_toe;
 using namespace std;
 
-void tablero::mostrar_tablero()
+Tablero::Tablero(int tableSize){
+	table_size = tableSize;
+}
+
+void Tablero::showTable()
 {
-	// valores de prueba
-	string casillas[9] = {"O", "O", "X", "O", "O", "O", "X", "X", "O"};
-		
-	for (int i = 0; i < 7; i += 3)
+	system("clear");
+
+	for (int x = 0; x < table_size; x++)
 	{
-		string fila = "|";
+		string fila = "| ";
 
-		for (int j = 0; j < 3; j++)
+		for (int y = 0; y < table_size; y++)
 		{
-			int indice = i + j;
-
-			fila += " " + casillas[indice] + " |";
+			fila = fila + table[x][y] + " | ";
 		}
 
 		cout << fila << endl;
 	}
 }
+
+void Tablero::newMovement(int x, int y, char player){
+
+	table[x][y]=player;
+
+}
+
+void Tablero::resetTable()
+{
+
+	for (int x = 0; x < table_size; x++)
+	{
+		for (int y = 0; y < table_size; y++)
+		{
+			table[x][y] = '-';
+		}
+	}
+}
+
+
