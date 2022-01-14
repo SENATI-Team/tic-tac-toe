@@ -12,9 +12,10 @@ namespace tic_tac_toe
 		Tablero(int);
 		void resetTable();
 		void showTable();
-		bool checkIsWinning();
+		bool checkIsWinning(char);
 		void newMovement(int, int,char); // Recivira "X" y "Y"
-
+		map<int, map<int, char>> getTable();
 		//GETS
+		int getTableSize();
 	};
 }

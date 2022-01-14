@@ -12,6 +12,16 @@ void Interface::showWelcome(){
 	cout<<"**** TIC-TAC-TOE #****"<<endl;
 	cout<<"//////////////////////"<<endl;
 }
+void Interface::showStateGame(){
+	system("clear");
+	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
+	cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ P2: " << config.getPlayerTwo()<<endl;
+	cout<<"---------"<<endl;
+	cout<<"X: " <<winsX<<endl;
+	cout<<"O: " <<winsO<<endl;
+	cout<<"---------"<<endl;
+	cout<<"Turno de: " << getTurn(count)<<endl<<endl;
+}
 //Formularios
 Config Interface::showCustomConfig(){ //Personalizar juego
 	cout<<"TIC-TAC-TOE";
@@ -38,8 +48,8 @@ void Interface::showWelcomeOptions(){
 		}
 	}
 }
-void Interface::showTableVector(){
-	cout<<"INGRESAR JUGADA (X, Y)";
+void Interface::showTableVector(){ //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
+	cout<<"INGRESAR JUGADA (X, Y)"<<endl;
 	int x,y;
 	cout<<"X: ";
 	cin>>x;
@@ -48,9 +58,15 @@ void Interface::showTableVector(){
 
 	if( (x>=0 && x<config.getTableSize()) &&
 		(y>=0 && y <config.getTableSize())){
-		tablero.newMovement(x,y, getTurn(count));
+		if(tablero.getTable()[x][y] == '-'){
+			tablero.newMovement(x,y, getTurn(count));
+		}else{
+			cout<<"Jugada no realizada"<<endl;
+			count--;
+		}
+
 	}else{
-		cout<<"Rangos no validos!!";
+		cout<<"Rangos no validos!!"<<endl;
 		count--;
 	}
 
@@ -64,16 +80,30 @@ void Interface::startGame(){
 void Interface::stopGame(){
 	state.stop();
 }
+void Interface::finishGame(char whoIsWin){
+	if(whoIsWin == 'X'){
+		winsX++;
+	}else if(whoIsWin == 'O'){
+		winsO++;
+	}
+	gamesCount++;
+}
 //Actualizacion
 void Interface::update(){
 	count++;
 	//Mostrar Tabla
+	showStateGame();
 	tablero.showTable();
 	//Modificar tabla
 	showTableVector();
 
-}
+	if(tablero.checkIsWinning(getTurn(count))){
+		finishGame(getTurn(count));
+		tablero.resetTable();
+	}
 
+
+}
 char Interface::getTurn(int count_p){
 	div_t target;
 	target = div(count_p, 2);
@@ -83,7 +113,6 @@ char Interface::getTurn(int count_p){
 		return config.getPlayerTwo();
 	}
 }
-
 //Retornar valores para poder ser configurados o ver el estado
 State Interface::getState(){
 	return state;
