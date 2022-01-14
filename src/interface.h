@@ -1,0 +1,28 @@
+#include "values.h"
+#include "tablero.h"
+
+namespace tic_tac_toe{
+	class Interface {
+	private:
+		Config config = Config();
+		State state = State();
+		Tablero tablero = Tablero(config.getTableSize());
+		int count = 0; //atraves de esto definimos los turnos en caso sea par o impar
+	public:
+		Interface();
+		Config showCustomConfig();
+		void showWelcomeOptions();
+		void showTableVector();
+		void showWelcome();
+		void startGame();
+		void stopGame();
+		char getTurn(int);
+		//Mostrar el estado del tablero
+		void update();
+		State getState();
+		Config getConfig();
+		Tablero getTablero();
+
+	};
+}
+
