@@ -3,59 +3,55 @@
 using namespace tic_tac_toe;
 
 //CONFIGURACIÓN
-Config::Config(int tableSize, char playerOne, char playerTwo){
-	table_size = tableSize;
-	player_one = playerOne;
-	player_two = playerTwo;
+Config::Config(int _table_size, char _player_one, char _player_two) {
+	table_size = _table_size;
+	player_one = _player_one;
+	player_two = _player_two;
 }
 
-Config::Config(){
-	table_size = 3;
-	player_one = 'X';
-	player_two = 'O';
-}
-
-int Config::getTableSize(){
+int Config::getTableSize() {
 	return table_size;
 }
-char Config::getPlayerOne(){
+
+char Config::getPlayerOne() {
 	return player_one;
 }
-char Config::getPlayerTwo(){
+
+char Config::getPlayerTwo() {
 	return player_two;
 }
 
-void Config::setTableSize(int tableSize){
-	table_size = tableSize;
+void Config::setTableSize(int _table_size) {
+	table_size = _table_size;
 }
-void Config::setTableSize(){
-	table_size = 3;
-}
-void Config::setPlayerOne(char playerOne){
+
+void Config::setPlayerOne(char playerOne) {
 	player_one = playerOne;
 }
-void Config::setPlayerTwo(char playerTwo){
+
+void Config::setPlayerTwo(char playerTwo) {
 	player_two = playerTwo;
 }
-void Config::setPlayers(){
+
+void Config::setPlayers() {
 	player_one = 'X';
 	player_two = 'O';
 }
 
 //ESTADO DEL JUEGO
-State::State(){
+State::State() {
 	is_running = false;
 	is_winning = false;
 }
-bool State::isRunning(){
+
+bool State::isRunning() {
 	return is_running;
 }
-void State::start(){
+
+void State::start() {
 	is_running = true;
 }
-void State::stop(){
+
+void State::stop() {
 	is_running = false;
 }
-
-
-
