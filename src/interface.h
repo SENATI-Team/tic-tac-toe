@@ -1,6 +1,6 @@
 #include "values.h"
 #include "tablero.h"
-
+#include <string>
 namespace tic_tac_toe {
 	class Interface {
 	private:
@@ -11,6 +11,7 @@ namespace tic_tac_toe {
 		int winsX = 0;
 		int winsO = 0;
 		int gamesCount = 0;
+		string error = "";
 	public:
 		Interface();
 		Config showCustomConfig();

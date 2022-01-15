@@ -15,6 +15,9 @@ void Interface::showWelcome() {
 
 void Interface::showStateGame() {
 	system("clear");
+	if(error != ""){
+		cout<<"ERROR: "<<error<<endl;
+	}
 	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
 	cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ P2: " << config.getPlayerTwo()<<endl;
 	cout<<"---------"<<endl;
@@ -26,10 +29,16 @@ void Interface::showStateGame() {
 
 //Formularios
 Config Interface::showCustomConfig() { //Personalizar juego
-	cout<<"TIC-TAC-TOE";
-	cout<<"Configuracion alternativa";
-	cout<<"Inserte tamaño de tabla";
-	return Config();
+	int tmp_new_size;
+	char tmp_player_one;
+
+	cout<<"TIC-TAC-TOE"<<endl;
+	cout<<"Configuracion alternativa" << endl;
+	cout<<"Inserte tamaño de tabla: ";
+	cin>>tmp_new_size;
+	Config tmpConfig = Config(tmp_new_size, 'X','O');
+
+	return tmpConfig;
 }
 
 void Interface::showWelcomeOptions() {
@@ -60,17 +69,18 @@ void Interface::showTableVector() { //Se ingresan valores para la jugada en cord
 	cin>>x;
 	cout<<"Y: ";
 	cin>>y;
-	bool flag = config.getTableSize();
+	int flag = config.getTableSize();
 
 	if ((x>=0 && x<flag) && (y>=0 && y<flag)) {
 		if (tablero.getTable()[x][y] == '-') {
 			tablero.newMovement(x,y, getTurn(count));
+			error = "";
 		} else {
-			cout<<"Jugada no realizada"<<endl;
+			error = "Jugada no realizada";
 			count--;
 		}
 	} else {
-		cout<<"Rangos no validos!!"<<endl;
+		error = "No seencuentra en los rangos";
 		count--;
 	}
 }
