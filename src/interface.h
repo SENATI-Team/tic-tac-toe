@@ -1,7 +1,7 @@
 #include "values.h"
 #include "tablero.h"
-
-namespace tic_tac_toe{
+#include <string>
+namespace tic_tac_toe {
 	class Interface {
 	private:
 		Config config = Config();
@@ -11,6 +11,7 @@ namespace tic_tac_toe{
 		int winsX = 0;
 		int winsO = 0;
 		int gamesCount = 0;
+		string error = "";
 	public:
 		Interface();
 		Config showCustomConfig();
@@ -27,7 +28,5 @@ namespace tic_tac_toe{
 		State getState();
 		Config getConfig();
 		Tablero getTablero();
-
 	};
 }
-

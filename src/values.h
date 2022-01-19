@@ -1,25 +1,24 @@
-namespace tic_tac_toe{
-	class Config{
+namespace tic_tac_toe {
+	class Config {
 	private:
 		int table_size;
 		char player_one;
 		char player_two;
 	public:
-		//Constructores
-		Config();
-		Config(int, char, char);
-		//Gets
+		//Constructor
+		Config(int _table_size = 3, char _player_one = 'X', char _player_two = 'O');
+		//Getters
 		int getTableSize();
 		char getPlayerOne();
 		char getPlayerTwo();
-		//Sets
-		void setTableSize(int);
-		void setTableSize();
+		//Setters
+		void setTableSize(int _table_size = 3);
 		void setPlayerOne(char);
 		void setPlayerTwo(char);
 		void setPlayers();
 	};
-	class State{
+
+	class State {
 	private:
 		bool is_running;
 		bool is_winning;

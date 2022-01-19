@@ -1,6 +1,5 @@
 #include "interface.h"
 #include <iostream>
-
 using namespace tic_tac_toe;
 using namespace std;
 
@@ -10,18 +9,9 @@ int main() {
 	interface.showWelcomeOptions();
 	interface.startGame();
 
-	while(interface.getState().isRunning()){
+	while (interface.getState().isRunning()) {
 		interface.update();
 	}
-
-
-
-
-
-
-
-
-
 
 	/*
 	State state = State();
