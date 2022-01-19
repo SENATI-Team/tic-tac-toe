@@ -1,5 +1,6 @@
-#include "interface.h"
 #include <iostream>
+#include "interface.h"
+#include "utility.h"
 using namespace tic_tac_toe;
 using namespace std;
 
@@ -7,10 +8,10 @@ Interface::Interface() {}
 
 //Esto se muestra en al iniciar
 void Interface::showWelcome() {
-	cout<<"//////////////////////"<<endl;
-	cout<<"***** BIENVENIDO *****"<<endl;
-	cout<<"**** TIC-TAC-TOE #****"<<endl;
-	cout<<"//////////////////////"<<endl;
+	showText("//////////////////////");
+	showText("***** BIENVENIDO *****");
+	showText("**** TIC-TAC-TOE #****");
+	showText("//////////////////////");
 }
 
 void Interface::showStateGame() {
@@ -20,10 +21,10 @@ void Interface::showStateGame() {
 	}
 	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
 	cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ P2: " << config.getPlayerTwo()<<endl;
-	cout<<"---------"<<endl;
+	showText("---------");
 	cout<<"X: " <<winsX<<endl;
 	cout<<"O: " <<winsO<<endl;
-	cout<<"---------"<<endl;
+	showText("---------");
 	cout<<"Turno de: " << getTurn(count)<<endl<<endl;
 }
 
@@ -32,8 +33,8 @@ Config Interface::showCustomConfig() { //Personalizar juego
 	int tmp_new_size;
 	char tmp_player_one;
 
-	cout<<"TIC-TAC-TOE"<<endl;
-	cout<<"Configuracion alternativa" << endl;
+	showText("TIC-TAC-TOE");
+	showText("Configuracion alternativa");
 	cout<<"Inserte tamaño de tabla: ";
 	cin>>tmp_new_size;
 	Config tmpConfig = Config(tmp_new_size, 'X','O');
@@ -46,8 +47,8 @@ void Interface::showWelcomeOptions() {
 
 	while (unconfigured) {
 		int option;
-		cout<<"[1] Iniciar Juego"<<endl;
-		cout<<"[2] Personalizado (NO PROBAR)"<<endl;
+		showText("[1] Iniciar Juego");
+		showText("[2] Personalizado (NO PROBAR)");
 		cin >> option;
 
 		if (option == 1) {
@@ -57,13 +58,13 @@ void Interface::showWelcomeOptions() {
 			config = showCustomConfig(); // Muestra un formulario para personlizar valores
 			unconfigured = false;
 		} else {
-			cout<<"Ingrese una opcion Correcta"<<endl;
+			showText("Ingrese una opcion Correcta");
 		}
 	}
 }
 
 void Interface::showTableVector() { //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
-	cout<<"INGRESAR JUGADA (X, Y)"<<endl;
+	showText("INGRESAR JUGADA (X, Y)");
 	int x,y;
 	cout<<"X: ";
 	cin>>x;

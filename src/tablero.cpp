@@ -1,6 +1,7 @@
 #include <iostream>
 #include "tablero.h"
 #include <stdlib.h>
+#include "utility.h"
 using namespace tic_tac_toe;
 using namespace std;
 
@@ -16,7 +17,7 @@ void Tablero::showTable() {
 			fila = fila + table[x][y] + " | ";
 		}
 
-		cout << fila << endl;
+		showText(fila);
 	}
 }
 
