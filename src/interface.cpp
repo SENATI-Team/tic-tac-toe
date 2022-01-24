@@ -16,16 +16,14 @@ void Interface::showWelcome() {
 
 void Interface::showStateGame() {
 	system("clear");
-	if(error != ""){
-		cout<<"ERROR: "<<error<<endl;
-	}
+
 	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
 	cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ P2: " << config.getPlayerTwo()<<endl;
 	showText("---------");
 	cout<<"X: " <<winsX<<endl;
 	cout<<"O: " <<winsO<<endl;
 	showText("---------");
-	cout<<"Turno de: " << getTurn(count)<<endl<<endl;
+	cout<<"Turno de: " << getTurn(0)<<endl<<endl;
 }
 
 //Formularios
@@ -42,6 +40,20 @@ Config Interface::showCustomConfig() { //Personalizar juego
 	return tmpConfig;
 }
 
+Machine Interface::showMachineConfig(){
+	showText("Modo COM\nElija Nivel:");
+	showText("[0] Facil (NO)");
+	showText("[1] Normal (NO)");
+	showText("[2] Dificil (NO)");
+	int difficulty;
+	cout<<"Elija el Nivel: ";
+	cin>> difficulty;
+	Machine tmp_machine;
+	if(difficulty >= 0 && difficulty <= 2){
+		tmp_machine = Machine(difficulty);
+	}
+	return tmp_machine;
+}
 void Interface::showWelcomeOptions() {
 	bool unconfigured = true; //No configurado
 
@@ -49,6 +61,7 @@ void Interface::showWelcomeOptions() {
 		int option;
 		showText("[1] Iniciar Juego");
 		showText("[2] Personalizado (NO PROBAR)");
+		showText("[3] vs COM");
 		cin >> option;
 
 		if (option == 1) {
@@ -57,13 +70,21 @@ void Interface::showWelcomeOptions() {
 		} else if (option == 2) {
 			config = showCustomConfig(); // Muestra un formulario para personlizar valores
 			unconfigured = false;
-		} else {
+		} else if(option == 3){
+			config = Config();
+			machine = showMachineConfig();
+			unconfigured = false;
+
+		}else {
 			showText("Ingrese una opcion Correcta");
 		}
 	}
 }
 
 void Interface::showTableVector() { //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
+	if(error != ""){
+		cout<<"ERROR: "<<error<<endl;
+	}
 	showText("INGRESAR JUGADA (X, Y)");
 	int x,y;
 	cout<<"X: ";
@@ -74,15 +95,15 @@ void Interface::showTableVector() { //Se ingresan valores para la jugada en cord
 
 	if ((x>=0 && x<flag) && (y>=0 && y<flag)) {
 		if (tablero.getTable()[x][y] == '-') {
-			tablero.newMovement(x,y, getTurn(count));
+			Vector position;
+			position = Vector(x, y);
+			insertInTable(position);
 			error = "";
 		} else {
 			error = "Jugada no realizada";
-			count--;
 		}
 	} else {
 		error = "No seencuentra en los rangos";
-		count--;
 	}
 }
 
@@ -105,25 +126,32 @@ void Interface::finishGame(char whoIsWin) {
 	}
 	gamesCount++;
 }
-
+void Interface::insertInTable(Vector _position){
+	char player = getTurn(1);
+	tablero.newMovement(_position.getX(),_position.getY(), player);
+	if (tablero.checkIsWinning(player)) {
+			finishGame(player);
+			tablero.resetTable();
+		}
+}
 //Actualizacion
 void Interface::update() {
-	count++;
 	//Mostrar Tabla
 	showStateGame();
 	tablero.showTable();
 	//Modificar tabla
 	showTableVector();
-
-	if (tablero.checkIsWinning(getTurn(count))) {
-		finishGame(getTurn(count));
-		tablero.resetTable();
+	if(machine.isActive() && getTurn(0) == machine.getPlayer()){
+		Vector generated = machine.generateMove(tablero);
+		insertInTable(generated);
 	}
 }
 
-char Interface::getTurn(int count_p) {
-	div_t target = div(count_p, 2);
-	
+char Interface::getTurn(int _turn)
+{
+	div_t target = div(count, 2);
+	count += _turn;
+
 	if (target.rem == 0) {
 		return config.getPlayerOne();
 	} else {

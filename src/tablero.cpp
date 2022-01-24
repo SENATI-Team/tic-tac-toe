@@ -1,9 +1,7 @@
-#include <iostream>
 #include "tablero.h"
 #include <stdlib.h>
 #include "utility.h"
 using namespace tic_tac_toe;
-using namespace std;
 
 Tablero::Tablero(int tableSize) {
 	table_size = tableSize;
@@ -43,7 +41,7 @@ bool Tablero::checkIsWinning(char player) {
 	int diagonalTwo = 0; //  '\'
 
 	for (int x = 0; x < table_size; x++) {
-		//Verticales
+
 		int vertical = 0;
 		int horizontal = 0;
 
@@ -66,9 +64,13 @@ bool Tablero::checkIsWinning(char player) {
 				vertical++;
 			}
 		}
-
-		return horizontal == table_size || vertical == table_size || diagonalOne == table_size || diagonalTwo == table_size;
+		//Por ahora mantendremos eso asi, por que no sirve  en diagonales
+		if(horizontal == table_size || vertical == table_size || diagonalOne == table_size || diagonalTwo == table_size){
+			return true;
+		}
 	}
+
+
 
 	return false;
 }
