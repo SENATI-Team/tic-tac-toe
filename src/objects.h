@@ -6,8 +6,7 @@ namespace tic_tac_toe{
 		int x;
 		int y;
 	public:
-		Vector();
-		Vector(int, int);
+		Vector(int _x = 0, int _y = 0);
 		//Getters
 		int getX();
 		int getY();

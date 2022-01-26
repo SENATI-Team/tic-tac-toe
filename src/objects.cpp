@@ -1,14 +1,9 @@
-
 #include "objects.h"
 using namespace tic_tac_toe;
 
 Vector::Vector(int _x, int _y){
 	x = _x;
 	y = _y;
-}
-Vector::Vector(){
-	x = 0;
-	y = 0;
 }
 int Vector::getX(){
 	return x;
@@ -17,7 +12,7 @@ int Vector::getY(){
 	return y;
 }
 void Vector::setX(int _x){
-	x =_x;
+	x = _x;
 }
 void Vector::setY(int _y){
 	y = _y;
@@ -34,8 +29,7 @@ Possibility::Possibility(char _player){
 	player = _player;
 }
 void Possibility::addEmptyPosition(Vector _empty){
-	empty_positions[empty_count] = _empty;
-	empty_count ++;
+	empty_positions[empty_count++] = _empty;
 }
 Vector Possibility::getEmtyPosition(int _index){
 	Vector tempVector = empty_positions[_index];

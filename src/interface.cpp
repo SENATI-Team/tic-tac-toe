@@ -40,24 +40,26 @@ Config Interface::showCustomConfig() { //Personalizar juego
 	return tmpConfig;
 }
 
-Machine Interface::showMachineConfig(){
+Machine Interface::showMachineConfig() {
 	showText("Modo COM\nElija Nivel:");
 	showText("[0] Facil (NO)");
 	showText("[1] Normal (NO)");
 	showText("[2] Dificil (NO)");
 	int difficulty;
 	cout<<"Elija el Nivel: ";
-	cin>> difficulty;
+	cin>>difficulty;
 	Machine tmp_machine;
-	if(difficulty >= 0 && difficulty <= 2){
+	if (difficulty >= 0 && difficulty <= 2) {
 		tmp_machine = Machine(difficulty);
 	}
 	return tmp_machine;
 }
+
 void Interface::showWelcomeOptions() {
 	bool unconfigured = true; //No configurado
 
 	while (unconfigured) {
+		unconfigured = false;
 		int option;
 		showText("[1] Iniciar Juego");
 		showText("[2] Personalizado (NO PROBAR)");
@@ -66,27 +68,24 @@ void Interface::showWelcomeOptions() {
 
 		if (option == 1) {
 			config = Config(); // Retorna valores por defecto
-			unconfigured = false;
 		} else if (option == 2) {
 			config = showCustomConfig(); // Muestra un formulario para personlizar valores
-			unconfigured = false;
-		} else if(option == 3){
+		} else if(option == 3) {
 			config = Config();
 			machine = showMachineConfig();
-			unconfigured = false;
-
-		}else {
+		} else {
 			showText("Ingrese una opcion Correcta");
+			unconfigured = true;
 		}
 	}
 }
 
 void Interface::showTableVector() { //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
-	if(error != ""){
+	if (error != "") {
 		cout<<"ERROR: "<<error<<endl;
 	}
 	showText("INGRESAR JUGADA (X, Y)");
-	int x,y;
+	int x, y;
 	cout<<"X: ";
 	cin>>x;
 	cout<<"Y: ";
@@ -126,13 +125,14 @@ void Interface::finishGame(char whoIsWin) {
 	}
 	gamesCount++;
 }
-void Interface::insertInTable(Vector _position){
+
+void Interface::insertInTable(Vector _position) {
 	char player = getTurn(1);
-	tablero.newMovement(_position.getX(),_position.getY(), player);
+	tablero.newMovement(_position.getX(), _position.getY(), player);
 	if (tablero.checkIsWinning(player)) {
-			finishGame(player);
-			tablero.resetTable();
-		}
+		finishGame(player);
+		tablero.resetTable();
+	}
 }
 //Actualizacion
 void Interface::update() {
@@ -141,22 +141,17 @@ void Interface::update() {
 	tablero.showTable();
 	//Modificar tabla
 	showTableVector();
-	if(machine.isActive() && getTurn(0) == machine.getPlayer()){
+	if(machine.isActive() && getTurn(0) == machine.getPlayer()) {
 		Vector generated = machine.generateMove(tablero);
 		insertInTable(generated);
 	}
 }
 
-char Interface::getTurn(int _turn)
-{
+char Interface::getTurn(int _turn) {
 	div_t target = div(count, 2);
 	count += _turn;
 
-	if (target.rem == 0) {
-		return config.getPlayerOne();
-	} else {
-		return config.getPlayerTwo();
-	}
+	return (target.rem == 0) ? config.getPlayerOne() : config.getPlayerTwo();
 }
 
 //Retornar valores para poder ser configurados o ver el estado
