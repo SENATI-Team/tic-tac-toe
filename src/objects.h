@@ -16,19 +16,18 @@ namespace tic_tac_toe{
 	};
 	class Possibility{
 	private:
-		char player;
-		int empty_count = 0;
-		bool available = true;
+		bool available;
 		map<int, Vector> empty_positions;
 	public:
-		Possibility(char, int);
-		Possibility(char);
+		Possibility(bool _available = true, int _height= 0);
 		void addEmptyPosition(Vector);
-		Vector getEmtyPosition(int);
-		int getEmptyCount();
+		Vector getEmtyPosition();
+
+		bool checkPossibility(); // Esto es una solucion temporal, quisiera agregar null en ves de vectores pero bueno...
 		int getEmptySize();
 		bool isAvailable();
 		void disable();
+		void enable();
 	};
 	class Machine{
 	private:
@@ -39,16 +38,23 @@ namespace tic_tac_toe{
 		 */
 		int difficulty;
 		bool active;
-		char player = 'O'; // SU identificador
+		char identifier; // SU identificador
 		Vector getEasyMove(Tablero);
 		Vector getNormalMove(Tablero);
 		Vector gethardMove(Tablero);
+
+		// Generar posibilidad
+		Possibility generatePossibility(Tablero, char);
+
 	public:
-		Machine();
-		Machine(int);
+		Machine(int _difficulty = 0, char _identifier = 'O', bool _active = false); // Dificultad (int), Identificdor(char)
 		Vector generateMove(Tablero);
 		bool isActive();
-		char getPlayer();
-		void setDifficulty(int);
+		char getIdentifier();
+		string getDifficultyES(); // Obtener la difucultad en Español[ES]
+
+		void setIdentifier(char _identifier = 'O');
+		void setActive(bool _active = true);
+		void setDifficulty(int _difficulty = 0);
 	};
 }

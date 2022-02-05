@@ -16,5 +16,6 @@ namespace tic_tac_toe {
 		map<int, map<int, char>> getTable();
 		//GETS
 		int getTableSize();
+		bool isFulled();
 	};
 }

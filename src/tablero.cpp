@@ -10,11 +10,9 @@ Tablero::Tablero(int tableSize) {
 void Tablero::showTable() {
 	for (int x = 0; x < table_size; x++) {
 		string fila = "| ";
-
 		for (int y = 0; y < table_size; y++) {
 			fila = fila + table[x][y] + " | ";
 		}
-
 		showText(fila);
 	}
 }
@@ -77,6 +75,18 @@ bool Tablero::checkIsWinning(char player) {
 
 int Tablero::getTableSize() {
 	return table_size;
+}
+bool Tablero::isFulled(){
+	int empty_count = 0;
+	for (int x = 0; x < table_size; x++) {
+		for (int y = 0; y < table_size; y++) {
+			if(table[x][y] == '-'){
+				empty_count++;
+			}
+		}
+	}
+	if(empty_count<=0) return true;
+	else return false;
 }
 
 map<int, map<int, char>> Tablero::getTable() {

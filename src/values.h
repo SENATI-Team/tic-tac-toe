@@ -20,11 +20,17 @@ namespace tic_tac_toe {
 
 	class State {
 	private:
-		bool is_running;
-		bool is_winning;
+		bool running;
+		bool winning;
+		bool configured;
 	public:
 		State();
 		bool isRunning();
+
+		bool isConfigured();
+		void enableConfigured();
+		void disableConfigured();
+
 		void start();
 		void stop();
 	};

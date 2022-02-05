@@ -1,6 +1,6 @@
 #include "values.h"
 #include "objects.h"
-//#include "tablero.h"
+#include <map>
 #include <string>
 namespace tic_tac_toe {
 	class Interface {
@@ -10,10 +10,8 @@ namespace tic_tac_toe {
 		Tablero tablero = Tablero(config.getTableSize());
 		Machine machine;
 		int count = 0; //atraves de esto definimos los turnos en caso sea par o impar
-		int winsX = 0;
-		int winsO = 0;
-		int gamesCount = 0;
-		string error = "";
+		map<string, int> score;
+		string message = "";
 	public:
 		Interface();
 		Config showCustomConfig();

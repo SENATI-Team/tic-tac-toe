@@ -40,18 +40,29 @@ void Config::setPlayers() {
 
 //ESTADO DEL JUEGO
 State::State() {
-	is_running = false;
-	is_winning = false;
+	running = true;
+	winning = false;
+	configured = false;
 }
 
 bool State::isRunning() {
-	return is_running;
+	return running;
+}
+bool State::isConfigured(){
+	return configured;
+}
+
+void State::enableConfigured(){
+	configured = true;
+}
+void State::disableConfigured(){
+	configured = false;
 }
 
 void State::start() {
-	is_running = true;
+	running = true;
 }
 
 void State::stop() {
-	is_running = false;
+	running = false;
 }
