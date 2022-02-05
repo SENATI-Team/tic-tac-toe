@@ -1,0 +1,5 @@
+CREATE TABLE game (
+	game_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	date VARCHAR(30),
+	winner CHAR(1)
+);

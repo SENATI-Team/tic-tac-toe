@@ -4,4 +4,5 @@ void get_connection();
 
 void close_connection();
 
-void save();
+void save_game();
+
