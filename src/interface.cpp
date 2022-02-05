@@ -1,8 +1,17 @@
+//Chequearemos del sistema operativo
+#ifdef __linux__
+#define SO 'L' // Linux 
+#elif _WIN32
+#define SO 'W' // Windows
+#endif
+
 #include <iostream>
 #include "interface.h"
 #include "utility.h"
 using namespace tic_tac_toe;
 using namespace std;
+
+
 
 //Constructor Prueba
 Interface::Interface(){
@@ -19,7 +28,12 @@ void Interface::showWelcome() {
 	showText("//////////////////////");
 }
 void Interface::showStateGame() {
-	system("clear");
+	if(SO == 'L'){
+		system("clear");
+	}else if(SO == 'W'){
+		system("cls");
+	}
+	
 	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
 	if(machine.isActive()){
 		cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ [COM]: " << machine.getIdentifier()<<endl;
