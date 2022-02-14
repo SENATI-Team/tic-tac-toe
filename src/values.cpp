@@ -1,5 +1,5 @@
-#include "values.h"
 #include <cstdlib>
+#include "values.h"
 using namespace tic_tac_toe;
 
 //CONFIGURACIÓN
@@ -48,14 +48,16 @@ State::State() {
 bool State::isRunning() {
 	return running;
 }
-bool State::isConfigured(){
+
+bool State::isConfigured() {
 	return configured;
 }
 
-void State::enableConfigured(){
+void State::enableConfigured() {
 	configured = true;
 }
-void State::disableConfigured(){
+
+void State::disableConfigured() {
 	configured = false;
 }
 

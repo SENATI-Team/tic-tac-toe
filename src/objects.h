@@ -1,7 +1,7 @@
-#include "tablero.h"
 #include <map>
-namespace tic_tac_toe{
-	class Vector{
+#include "tablero.h"
+namespace tic_tac_toe {
+	class Vector {
 	private:
 		int x;
 		int y;
@@ -14,7 +14,7 @@ namespace tic_tac_toe{
 		void setX(int);
 		void setY(int);
 	};
-	class Possibility{
+	class Possibility {
 	private:
 		bool available;
 		map<int, Vector> empty_positions;
@@ -29,7 +29,7 @@ namespace tic_tac_toe{
 		void disable();
 		void enable();
 	};
-	class Machine{
+	class Machine {
 	private:
 		/*
 		 0: Facil

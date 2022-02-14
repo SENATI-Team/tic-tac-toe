@@ -1,7 +1,7 @@
-#include "values.h"
-#include "objects.h"
 #include <map>
 #include <string>
+#include "objects.h"
+#include "values.h"
 namespace tic_tac_toe {
 	class Interface {
 	private:

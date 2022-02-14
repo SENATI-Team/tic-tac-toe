@@ -9,5 +9,6 @@ if [ ! -d bin ]; then
 	mkdir bin
 fi
 
-g++ src/*.cpp -l sqlite3 -Isrc/sqlite-amalgamation-3370200 -o $FILE && $FILE
+
+g++ src/*.cpp -l sqlite3 -I src/sqlite-amalgamation-3370200 -o $FILE -Wall && $FILE
 cd script

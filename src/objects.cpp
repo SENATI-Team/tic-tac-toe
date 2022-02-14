@@ -1,87 +1,103 @@
 #include "objects.h"
-using namespace tic_tac_toe;
 using namespace std;
+using namespace tic_tac_toe;
 
-Vector::Vector(int _x, int _y){
+Vector::Vector(int _x, int _y) {
 	x = _x;
 	y = _y;
 }
-int Vector::getX(){
+
+int Vector::getX() {
 	return x;
 }
-int Vector::getY(){
+
+int Vector::getY() {
 	return y;
 }
-void Vector::setX(int _x){
+
+void Vector::setX(int _x) {
 	x = _x;
 }
-void Vector::setY(int _y){
+
+void Vector::setY(int _y) {
 	y = _y;
 }
+
 //Possibility
-Possibility::Possibility(bool _available, int  _height){
+Possibility::Possibility(bool _available, int  _height) {
 	available = _available;
-	for(int i = 0; i <  _height ; i++){
+	for (int i = 0; i <  _height ; i++) {
 		addEmptyPosition(Vector()); //LLena objetos vacios dependiendo del tamaño de la tabla
 	}
 }
-void Possibility::addEmptyPosition(Vector _empty){
+
+void Possibility::addEmptyPosition(Vector _empty) {
 	empty_positions[getEmptySize()] = _empty;
 }
-Vector Possibility::getEmtyPosition(){
+
+Vector Possibility::getEmtyPosition() {
 	int i = rand() % getEmptySize();
 	Vector tempVector = empty_positions[i];
 	return tempVector;
 }
-int Possibility::getEmptySize(){
+
+int Possibility::getEmptySize() {
 	return empty_positions.size();
 }
-bool Possibility::isAvailable(){
+
+bool Possibility::isAvailable() {
 	return available;
 }
-void Possibility::disable(){
+
+void Possibility::disable() {
 	available = false;
 }
-void Possibility::enable(){
+
+void Possibility::enable() {
 	available = true;
 }
-bool Possibility::checkPossibility(){
+
+bool Possibility::checkPossibility() {
 	int count_nothing = 0;
 
-	for(int i = 0; i < getEmptySize(); i++ ){
-		if(empty_positions[i].getX() == 0 && empty_positions[i].getY() == 0){
+	for(int i = 0; i < getEmptySize(); i++ ) {
+		if(empty_positions[i].getX() == 0 && empty_positions[i].getY() == 0) {
 			count_nothing++;
 		}
 	}
 
-	if(count_nothing > 1){
+	if(count_nothing > 1) {
 		return false;
-	}else{
+	}else {
 		return true;
 	}
 }
 
 // MACHINE
-Machine::Machine(int _difficulty, char _identifier, bool _active){
+Machine::Machine(int _difficulty, char _identifier, bool _active) {
 	difficulty =  _difficulty;
 	identifier =  _identifier;
 	active 		= _active;
 }
-char Machine::getIdentifier(){
+
+char Machine::getIdentifier() {
 	return identifier;
 }
-bool Machine::isActive(){
+
+bool Machine::isActive() {
 	return active;
 }
-Vector Machine::generateMove(Tablero _tablero){
-	if(difficulty == 0){
+
+Vector Machine::generateMove(Tablero _tablero) {
+	if(difficulty == 0) {
 		return getEasyMove(_tablero);
-	}else if(difficulty == 1){
+	}else if(difficulty == 1) {
 		return getNormalMove(_tablero);
 	}
 	return Vector();
 }
-Possibility Machine::generatePossibility(Tablero _tablero, char _player){
+
+Possibility Machine::generatePossibility(Tablero _tablero, char _player) {
 	// solo esta de relleno
 	Tablero tablero = _tablero;
 	char player = _player;
@@ -102,13 +118,13 @@ Possibility Machine::generatePossibility(Tablero _tablero, char _player){
 		//Chequeo de Diagonales
 		if (tablero.getTable()[x][x] == '-') {
 			diagonalOne.addEmptyPosition(Vector(x,x));
-		}else if(tablero.getTable()[x][x] != player){
+		}else if(tablero.getTable()[x][x] != player) {
 			diagonalOne.disable();
 		}
 
 		if (tablero.getTable()[x][tablero.getTableSize()-1-x] == '-') {
 			diagonalTwo.addEmptyPosition(Vector(x, tablero.getTableSize()-1-x ));
-		}else if(tablero.getTable()[x][tablero.getTableSize()-1-x] != player){
+		}else if(tablero.getTable()[x][tablero.getTableSize()-1-x] != player) {
 			diagonalTwo.disable();
 		}
 
@@ -117,7 +133,7 @@ Possibility Machine::generatePossibility(Tablero _tablero, char _player){
 			// Chequeo de lineas rectas
 			if (tablero.getTable()[x][y] == '-') {
 				horizontal.addEmptyPosition(Vector(x,y));
-			}else if(tablero.getTable()[x][y] != player){
+			}else if(tablero.getTable()[x][y] != player) {
 				horizontal.disable();
 			}
 
@@ -130,84 +146,87 @@ Possibility Machine::generatePossibility(Tablero _tablero, char _player){
 
 		// Chequeo de posibilidades en lineas rectas
 		if(moveSelected.getEmptySize() > vertical.getEmptySize() &&
-				vertical.isAvailable()){
+				vertical.isAvailable()) {
 			moveSelected = vertical;
 		}
 
 		if(moveSelected.getEmptySize() > horizontal.getEmptySize() &&
-				horizontal.isAvailable()){
+				horizontal.isAvailable()) {
 			moveSelected = horizontal;
 		}
 	}
 
 	// Chequeo de diagonales
 	if(moveSelected.getEmptySize() > diagonalOne.getEmptySize() &&
-			diagonalOne.isAvailable()){
+			diagonalOne.isAvailable()) {
 		moveSelected = diagonalOne;
 	}
 	else if(moveSelected.getEmptySize() > diagonalTwo.getEmptySize() &&
-			diagonalTwo.isAvailable()){
+			diagonalTwo.isAvailable()) {
 		moveSelected = diagonalTwo;
 	}
 
 	return moveSelected;
 
 }
-Vector Machine::getEasyMove(Tablero _tablero){
+
+Vector Machine::getEasyMove(Tablero _tablero) {
 	Tablero tablero = _tablero;
 	bool findingPosition = true;
-	while(findingPosition){
+	while(findingPosition) {
 		int x, y;
 			x = rand() % tablero.getTableSize();
 			y = rand() % tablero.getTableSize();
-		if(tablero.getTable()[x][y] == '-'){
+		if(tablero.getTable()[x][y] == '-') {
 			findingPosition = false;
 			return Vector(x, y);
 		}
 	}
 	return Vector();
 }
-Vector Machine::getNormalMove(Tablero _tablero){
+
+Vector Machine::getNormalMove(Tablero _tablero) {
 
 	Possibility forX = generatePossibility(_tablero, 'X');
 	Possibility forO = generatePossibility(_tablero, 'O');
 
-	if(forX.getEmptySize() > forO.getEmptySize()){
+	if(forX.getEmptySize() > forO.getEmptySize()) {
 
 		return forO.getEmtyPosition();
 
-	}else if(forX.getEmptySize() < forO.getEmptySize()){
+	}else if(forX.getEmptySize() < forO.getEmptySize()) {
 
 		return forX.getEmtyPosition();
 
-	}else if(forX.getEmptySize() == forO.getEmptySize()){
+	}else if(forX.getEmptySize() == forO.getEmptySize()) {
 
-		if(identifier == 'O'){
+		if(identifier == 'O') {
 			return forO.getEmtyPosition();
-		}else{
+		}else {
 			return forX.getEmtyPosition();
 		}
 
-	}else{
+	}else {
 		return getEasyMove(_tablero);
 	}
 
 }
 
-
-void Machine::setDifficulty(int _difficulty){
+void Machine::setDifficulty(int _difficulty) {
 	difficulty = _difficulty;
 }
-void Machine::setActive(bool _active){
+
+void Machine::setActive(bool _active) {
 	active = _active;
 }
-void Machine::setIdentifier(char _identifier){
+
+void Machine::setIdentifier(char _identifier) {
 	identifier = _identifier;
 }
-string Machine::getDifficultyES(){
+
+string Machine::getDifficultyES() {
 	if(difficulty == 0) return "Facil";
 	else if(difficulty == 1) return "Normal";
 	else if(difficulty == 2) return "Dificil";
 	else return "NO SELECCIONADO";
 }
-

@@ -1,8 +1,8 @@
+#include <iostream>
 #include "db_operations.h"
 #include "interface.h"
-#include <iostream>
-using namespace tic_tac_toe;
 using namespace std;
+using namespace tic_tac_toe;
 
 int main() {
 	// SQLite connection
@@ -16,8 +16,6 @@ int main() {
 	if(interface.getState().isRunning()){
 		interface.startGame();
 	}
-
-
 
 	while (interface.getState().isRunning()) {
 		interface.update();

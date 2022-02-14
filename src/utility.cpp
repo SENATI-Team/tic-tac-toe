@@ -1,5 +1,5 @@
-#include <iostream>
 #include <ctime>
+#include <iostream>
 #include <string>
 #include "utility.h"
 using namespace std;

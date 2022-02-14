@@ -1,5 +1,5 @@
-#include "tablero.h"
 #include <stdlib.h>
+#include "tablero.h"
 #include "utility.h"
 using namespace tic_tac_toe;
 
@@ -76,6 +76,7 @@ bool Tablero::checkIsWinning(char player) {
 int Tablero::getTableSize() {
 	return table_size;
 }
+
 bool Tablero::isFulled(){
 	int empty_count = 0;
 	for (int x = 0; x < table_size; x++) {

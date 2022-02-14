@@ -1,5 +1,5 @@
-#include <map>
 #include <iostream>
+#include <map>
 using namespace std;
 
 namespace tic_tac_toe {

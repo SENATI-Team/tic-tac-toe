@@ -6,39 +6,42 @@
 #endif
 
 #include <iostream>
+#include "db_operations.h"
 #include "interface.h"
 #include "utility.h"
-using namespace tic_tac_toe;
 using namespace std;
-
-
+using namespace tic_tac_toe;
 
 //Constructor Prueba
-Interface::Interface(){
+Interface::Interface() {
 	score["X"] = 0;
 	score["O"] = 0;
 	score["T"] = 0; // EMPATE 'TIE'
 	score["gamesCount"] = 0;
 }
+
 //Esto se muestra en al iniciar
 void Interface::showWelcome() {
-	showText("//////////////////////");
-	showText("***** BIENVENIDO *****");
-	showText("**** TIC-TAC-TOE #****");
-	showText("//////////////////////");
+	const char* welcome =
+		"//////////////////////\n"
+		"***** BIENVENIDO *****\n"
+		"**** TIC-TAC-TOE #****\n"
+		"//////////////////////\n";
+	showText(welcome);
 }
+
 void Interface::showStateGame() {
-	if(SO == 'L'){
+	if(SO == 'L') {
 		system("clear");
-	}else if(SO == 'W'){
+	}else if(SO == 'W') {
 		system("cls");
 	}
 	
 	cout<<"TABLA: " << tablero.getTableSize() << " X " << tablero.getTableSize()<<endl;
-	if(machine.isActive()){
+	if(machine.isActive()) {
 		cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ [COM]: " << machine.getIdentifier()<<endl;
 		cout<<"[COM] Dificultad: "<< machine.getDifficultyES()<<endl;
-	}else{
+	}else {
 		cout<<"Jugadores: P1: " << config.getPlayerOne() << " /VS/ P2: " << config.getPlayerTwo()<<endl;
 	}
 	showText("---------");
@@ -49,6 +52,7 @@ void Interface::showStateGame() {
 	showText("---------");
 	cout<<"Turno de: " << getTurn(0)<<endl<<endl;
 }
+
 //Formularios
 Config Interface::showCustomConfig() { //Personalizar juego
 	int tmp_new_size;
@@ -62,6 +66,7 @@ Config Interface::showCustomConfig() { //Personalizar juego
 
 	return tmpConfig;
 }
+
 Machine Interface::showMachineConfig() {
 	showText("Modo COM\nElija Nivel:");
 	showText("[0] Facil");
@@ -77,19 +82,24 @@ Machine Interface::showMachineConfig() {
 	}
 	return tmp_machine;
 }
+
 void Interface::showWelcomeOptions() {
 	while (!state.isConfigured()) {
 		state.enableConfigured();
 		int option;
-		showText("[1] Iniciar Juego");
-		showText("[2] Personalizado");
-		showText("[3] vs COM");
-		showText("[4] vs COM - Personalizado");
-		showText("[0] Salir");
+
+		const char* welcomeOptions =
+			"[1] Iniciar Juego\n"
+			"[2] Personalizado\n"
+			"[3] vs COM\n"
+			"[4] vs COM - Personalizado\n"
+			"[0] Salir";
+		showText(welcomeOptions);
+		
 		cout	<<":> ";
 		cin >> option;
 
-		if(option == 0){
+		if(option == 0) {
 			stopGame();
 		}else if (option == 1) {
 			// Retorna valores por defecto
@@ -130,7 +140,7 @@ void Interface::showTableVector() { //Se ingresan valores para la jugada en cord
 			message = "Jugada no realizada";
 		}
 	} else {
-		message = "No seencuentra en los rangos";
+		message = "No se encuentra en los rangos";
 	}
 }
 
@@ -156,13 +166,15 @@ void Interface::insertInTable(Vector _position) {
 	char player = getTurn(1);
 	tablero.newMovement(_position.getX(), _position.getY(), player);
 	if (tablero.checkIsWinning(player)) {
+		save_game(player);
 		finishGame(player);
 		tablero.resetTable();
-	}else 	if(tablero.isFulled()){
+	}else 	if(tablero.isFulled()) {
 		finishGame('T');
 		tablero.resetTable();
 	}
 }
+
 //Actualizacion
 void Interface::update() {
 	//Mostrar Tabla
