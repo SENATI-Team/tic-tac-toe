@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "tablero.h"
 #include "utility.h"
+
 using namespace tic_tac_toe;
 
 Tablero::Tablero(int tableSize) {

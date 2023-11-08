@@ -1,5 +1,6 @@
 #include <map>
 #include "tablero.h"
+
 namespace tic_tac_toe {
 	class Vector {
 	private:
