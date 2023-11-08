@@ -6,14 +6,14 @@
 #endif
 
 #include <iostream>
-#include "db_operations.h"
-#include "interface.h"
+// #include "db_operations.h"
+#include "console_interface.h"
 #include "utility.h"
 using namespace std;
 using namespace tic_tac_toe;
 
 //Constructor Prueba
-Interface::Interface() {
+ConsoleInterface::ConsoleInterface() {
 	score["X"] = 0;
 	score["O"] = 0;
 	score["T"] = 0; // EMPATE 'TIE'
@@ -21,7 +21,7 @@ Interface::Interface() {
 }
 
 //Esto se muestra en al iniciar
-void Interface::showWelcome() {
+void ConsoleInterface::showWelcome() {
 	const char* welcome =
 		"//////////////////////\n"
 		"***** BIENVENIDO *****\n"
@@ -30,7 +30,7 @@ void Interface::showWelcome() {
 	showText(welcome);
 }
 
-void Interface::showStateGame() {
+void ConsoleInterface::showStateGame() {
 	if(SO == 'L') {
 		system("clear");
 	}else if(SO == 'W') {
@@ -54,7 +54,7 @@ void Interface::showStateGame() {
 }
 
 //Formularios
-Config Interface::showCustomConfig() { //Personalizar juego
+Config ConsoleInterface::showCustomConfig() { //Personalizar juego
 	int tmp_new_size;
 	char tmp_player_one;
 
@@ -67,7 +67,7 @@ Config Interface::showCustomConfig() { //Personalizar juego
 	return tmpConfig;
 }
 
-Machine Interface::showMachineConfig() {
+Machine ConsoleInterface::showMachineConfig() {
 	showText("Modo COM\nElija Nivel:");
 	showText("[0] Facil");
 	showText("[1] Normal");
@@ -83,7 +83,7 @@ Machine Interface::showMachineConfig() {
 	return tmp_machine;
 }
 
-void Interface::showWelcomeOptions() {
+void ConsoleInterface::showWelcomeOptions() {
 	while (!state.isConfigured()) {
 		state.enableConfigured();
 		int option;
@@ -118,7 +118,7 @@ void Interface::showWelcomeOptions() {
 	}
 }
 
-void Interface::showTableVector() { //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
+void ConsoleInterface::showTableVector() { //Se ingresan valores para la jugada en cordenadas x,y por eso es Vector
 	if (message != "") {
 		cout<<"MENSAJE: "<<message<<endl;
 	}
@@ -145,28 +145,28 @@ void Interface::showTableVector() { //Se ingresan valores para la jugada en cord
 }
 
 //Control del estado del juego
-void Interface::startGame() {
+void ConsoleInterface::startGame() {
 	tablero = Tablero(config.getTableSize());
 	tablero.resetTable();
 	state.start();
 }
 
-void Interface::stopGame() {
+void ConsoleInterface::stopGame() {
 	state.stop();
 }
 
-void Interface::finishGame(char whoIsWin) {
+void ConsoleInterface::finishGame(char whoIsWin) {
 	string temp_string;
 	temp_string.push_back(whoIsWin);
 	score[temp_string]++;
 	score["gamesCount"]++;
 }
 
-void Interface::insertInTable(Vector _position) {
+void ConsoleInterface::insertInTable(Vector _position) {
 	char player = getTurn(1);
 	tablero.newMovement(_position.getX(), _position.getY(), player);
 	if (tablero.checkIsWinning(player)) {
-		save_game(player);
+		//saveGame(player);
 		finishGame(player);
 		tablero.resetTable();
 	}else 	if(tablero.isFulled()) {
@@ -176,7 +176,7 @@ void Interface::insertInTable(Vector _position) {
 }
 
 //Actualizacion
-void Interface::update() {
+void ConsoleInterface::update() {
 	//Mostrar Tabla
 	showStateGame();
 	tablero.showTable();
@@ -188,7 +188,7 @@ void Interface::update() {
 	}
 }
 
-char Interface::getTurn(int _turn) {
+char ConsoleInterface::getTurn(int _turn) {
 	div_t target = div(count, 2);
 	count += _turn;
 
@@ -196,14 +196,19 @@ char Interface::getTurn(int _turn) {
 }
 
 //Retornar valores para poder ser configurados o ver el estado
-State Interface::getState() {
+State ConsoleInterface::getState() {
 	return state;
 }
 
-Config Interface::getConfig() {
+Config ConsoleInterface::getConfig() {
 	return config;
 }
 
-Tablero Interface::getTablero() {
+Tablero ConsoleInterface::getTablero() {
 	return tablero;
+}
+
+Machine ConsoleInterface::getMachine()
+{
+	return machine;
 }

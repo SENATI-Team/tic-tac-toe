@@ -53,7 +53,6 @@ bool Tablero::checkIsWinning(char player) {
 		}
 
 		for (int y = 0; y < table_size; y++) {
-
 			if (table[x][y] == player) {
 				horizontal++;
 			}
@@ -67,8 +66,6 @@ bool Tablero::checkIsWinning(char player) {
 			return true;
 		}
 	}
-
-
 
 	return false;
 }

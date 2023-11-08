@@ -1,9 +1,9 @@
 #include <map>
 #include <string>
-#include "objects.h"
-#include "values.h"
+#include "../objects.h"
+#include "../values.h"
 namespace tic_tac_toe {
-	class Interface {
+	class ConsoleInterface {
 	private:
 		Config config = Config();
 		State state = State();
@@ -13,7 +13,7 @@ namespace tic_tac_toe {
 		map<string, int> score;
 		string message = "";
 	public:
-		Interface();
+		ConsoleInterface();
 		Config showCustomConfig();
 		void showWelcomeOptions();
 		void showTableVector();

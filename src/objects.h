@@ -41,7 +41,7 @@ namespace tic_tac_toe {
 		char identifier; // SU identificador
 		Vector getEasyMove(Tablero);
 		Vector getNormalMove(Tablero);
-		Vector gethardMove(Tablero);
+		// Vector getHardMove(Tablero);
 
 		// Generar posibilidad
 		Possibility generatePossibility(Tablero, char);

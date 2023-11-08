@@ -12,7 +12,7 @@ namespace tic_tac_toe {
 		void resetTable();
 		void showTable();
 		bool checkIsWinning(char);
-		void newMovement(int, int, char); // Recivira "X" y "Y"
+		void newMovement(int, int, char); // Recibira "X" e "Y"
 		map<int, map<int, char>> getTable();
 		//GETS
 		int getTableSize();

@@ -1,25 +1,25 @@
 #include <iostream>
-#include "db_operations.h"
-#include "interface.h"
+#include "console_interface.h"
+// #include "db_operations.h"
+
 using namespace std;
 using namespace tic_tac_toe;
 
-int main() {
+int main()
+{
 	// SQLite connection
-	get_connection();
+	// tic_tac_toe::openConnection();
 
-	Interface interface = Interface();
-	interface.showWelcome();
-
-	interface.showWelcomeOptions();
-
-	if(interface.getState().isRunning()){
-		interface.startGame();
+	ConsoleInterface consoleInterface = ConsoleInterface();
+	consoleInterface.showWelcome();
+	consoleInterface.showWelcomeOptions();
+	if (consoleInterface.getState().isRunning())
+	{
+		consoleInterface.startGame();
 	}
-
-	while (interface.getState().isRunning()) {
-		interface.update();
+	while (consoleInterface.getState().isRunning())
+	{
+		consoleInterface.update();
 	}
-
     return 0;
 }

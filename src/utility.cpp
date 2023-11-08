@@ -4,13 +4,14 @@
 #include "utility.h"
 using namespace std;
 
-void showText(string text) {
+void showText(string text)
+{
 	cout << text << endl;
 }
 
-string get_current_time() {
+string getCurrentTime()
+{
 	time_t current_time;
 	time(&current_time);
-
 	return asctime(localtime(&current_time));
 }
